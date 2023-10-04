@@ -33,11 +33,20 @@
             background-color: #555;
         }
         
-        #copyright {
+        #copyright, #lastUpdated {
             font-size: 0.8em;         /* Adjusts the size. 0.8em is 80% of the current font size. You can tweak this value to your liking. */
             text-transform: uppercase; /* Converts text to all caps */
             letter-spacing: 2px;      /* Increases spacing between letters. Adjust as needed. */
         }
+
+        #output {
+            margin-bottom: 20px; /* Adjust as needed for desired spacing */
+        }
+
+        #info p {
+            margin-top: 10px; /* Adjust as needed for spacing between paragraphs */
+        }
+
     </style>
 </head>
 <body>
@@ -59,8 +68,12 @@
             <button type="button" onclick="generateCode()">Generate Code</button>
         </form>
         <h2>Shopify HTML Output</h2>
-        <textarea id="output" rows="10" readonly></textarea><br>
-        <p id="copyright"></p>
+        <textarea id="output" rows="10" readonly></textarea>
+            <div id="info">
+                <p id="copyright"></p>
+                <p id="lastUpdated"></p>
+            </div>
+
     </div>
 <script> 
 function generateCode() {
@@ -106,7 +119,17 @@ function copyToClipboard(text) {
     document.body.removeChild(textarea);
     alert("Code generated and copied to clipboard!");
 }
-
+    
+document.addEventListener('DOMContentLoaded', function() {
+    // Fetching the last commit date
+    fetch('https://api.github.com/repos/USERNAME/REPOSITORY/commits/master')
+        .then(response => response.json())
+        .then(data => {
+            const lastUpdatedDate = new Date(data.commit.author.date).toLocaleDateString();
+            document.getElementById('lastUpdated').textContent = 'Last updated: ' + lastUpdatedDate;
+        })
+        .catch(error => console.error('Error fetching commit data:', error));
+});
 </script>
 
 <script>
