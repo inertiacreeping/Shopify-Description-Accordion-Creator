@@ -3,98 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Description Generator</title>
+    <title>Shopify Description Converter</title>
     <style>
-        .accordion {
-            cursor: pointer;
-            padding: 14px;
-            text-align: left;
-            border: none;
-            outline: none;
-            transition: 0.4s;
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        textarea {
             width: 100%;
-            background-color: #f1f1f1;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
         }
 
-        .panel {
-            display: none;
-            padding: 0 18px;
-            overflow: hidden;
+        button {
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
-        .accordion:after {
-            content: '\02795'; /* Unicode character for "plus" sign (+) */
-            float: right;
-        }
-
-        .active:after {
-            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        button:hover {
+            background-color: #555;
         }
     </style>
 </head>
 <body>
-    <h2>Product Description Generator</h2>
+    <div class="container">
+        <h2>Shopify Description Input</h2>
+        <form id="descriptionForm">
+            <label for="introduction">Introduction:</label>
+            <textarea id="introduction" rows="5" required></textarea>
 
-    <label>Introduction (plain text):</label>
-    <textarea id="intro" rows="4" cols="50"></textarea><br><br>
+            <label for="features">Features & Benefits:</label>
+            <textarea id="features" rows="5" required></textarea>
 
-    <label>Features & Benefits (each point on a new line):</label>
-    <textarea id="features" rows="10" cols="50"></textarea><br><br>
+            <label for="included">What’s Included:</label>
+            <textarea id="included" rows="5" required></textarea>
 
-    <label>What’s Included (each point on a new line):</label>
-    <textarea id="included" rows="10" cols="50"></textarea><br><br>
-
-    <button onclick="generateCode()">Generate Code</button>
-
-    <h3>Generated Code:</h3>
-    <textarea id="output" rows="15" cols="50" readonly></textarea>
-
+            <button type="button" onclick="generateCode()">Generate Code</button>
+        </form>
+        <h2>Shopify HTML Output</h2>
+        <textarea id="output" rows="10" readonly></textarea>
+    </div>
     <script>
         function generateCode() {
-            var intro = document.getElementById('intro').value;
-            var features = document.getElementById('features').value.split("\n").map(line => `<li>${line}</li>`).join('');
-            var included = document.getElementById('included').value.split("\n").map(line => `<li>${line}</li>`).join('');
+            const introduction = document.getElementById('introduction').value;
+            const features = document.getElementById('features').value;
+            const included = document.getElementById('included').value;
 
-            var html = `
-            <!-- Introduction -->
-            <button class="accordion">Introduction</button>
-            <div class="panel">
-                <p>${intro}</p>
-            </div>
+            const template = `
+            <details>
+                <summary>Introduction</summary>
+                ${introduction}
+            </details>
 
-            <!-- Features & Benefits -->
-            <button class="accordion">Features & Benefits</button>
-            <div class="panel">
-                <ul>
-                    ${features}
-                </ul>
-            </div>
+            <details>
+                <summary>Features & Benefits</summary>
+                ${features}
+            </details>
 
-            <!-- What’s Included -->
-            <button class="accordion">What’s Included</button>
-            <div class="panel">
-                <ul>
-                    ${included}
-                </ul>
-            </div>
+            <details>
+                <summary>What’s Included</summary>
+                ${included}
+            </details>
             `;
-            
-            // Display the generated code
-            document.getElementById('output').value = html;
-        }
 
-        var acc = document.getElementsByClassName("accordion");
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
-                } else {
-                    panel.style.display = "block";
-                }
-            });
+            document.getElementById('output').value = template;
         }
     </script>
 </body>
