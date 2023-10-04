@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopify Description Converter // Beta v0.3</title>
+    <title>Shopify Description Converter // Beta v0.4</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,50 +33,16 @@
             background-color: #555;
         }
         
-.fireworks {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    z-index: 9999;
-}
-
-.fireworks .before, .fireworks .after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 4px;
-    height: 4px;
-    margin: -2px 0 0 -2px;
-    background: #ff0;
-    border-radius: 50%;
-    box-shadow: 0 0 25px #ff0, 0 0 50px #ff0, 0 0 100px #ff0, 0 0 200px #ff0, 0 0 200px #ff0;
-    animation: animate 1.5s infinite;
-}
-
-.fireworks .after {
-    animation-delay: .2s;
-}
-
-@keyframes animate {
-    0% {
-        transform: scale(0.1, 0.1);
-        opacity: 0.2;
-    }
-    100% {
-        transform: scale(1.2, 1.2);
-        opacity: 0;
-    }
-}
-
+        #copyright {
+            font-size: 0.8em;         /* Adjusts the size. 0.8em is 80% of the current font size. You can tweak this value to your liking. */
+            text-transform: uppercase; /* Converts text to all caps */
+            letter-spacing: 2px;      /* Increases spacing between letters. Adjust as needed. */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Shopify Description Converter // Beta v0.3</h2>
+        <h2>Shopify Description Converter // Beta v0.4</h2>
         <form id="descriptionForm">
             <label for="introduction">Introduction (will be shown directly):</label>
             <textarea id="introduction" rows="5" required></textarea>
@@ -93,19 +59,10 @@
             <button type="button" onclick="generateCode()">Generate Code</button>
         </form>
         <h2>Shopify HTML Output</h2>
-        <textarea id="output" rows="10" readonly></textarea>
+        <textarea id="output" rows="10" readonly></textarea><br>
+        <p id="copyright"></p>
     </div>
-<script>
-function showFireworks() {
-    const fireworks = document.querySelector('.fireworks');
-    fireworks.style.display = 'block';
-    
-    // Hide the fireworks after 5 seconds
-    setTimeout(() => {
-        fireworks.style.display = 'none';
-    }, 5000);
-}
-    
+<script> 
 function generateCode() {
     const introduction = document.getElementById('introduction').value;
     const details = document.getElementById('details').value;
@@ -133,7 +90,6 @@ function generateCode() {
 
     document.getElementById('output').value = template;
     copyToClipboard(template);
-    showFireworks();  // Call this here
 }
 
 function convertToBulletPoints(text) {
@@ -153,21 +109,12 @@ function copyToClipboard(text) {
 
 </script>
 
-<div class="fireworks">
-    <div class="before"></div>
-    <div class="after"></div>
-</div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentYear = new Date().getFullYear();
         document.getElementById('copyright').textContent = 'Copyright ' + currentYear + ' Morris Lazootin';
     });
 </script>
-
-<footer>
-    <p id="copyright"></p>
-</footer>
     
 </body>
 
