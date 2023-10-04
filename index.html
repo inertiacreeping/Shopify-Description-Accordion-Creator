@@ -5,17 +5,20 @@
     <script src="https://cdn.tiny.cloud/1/dzj9jenjghu6twyp0ef0yi2fbtt0kotdxn7vcwtqxodw1nni/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
-    tinymce.init({
-        selector: 'textarea',  // Change this value according to your HTML structure
-        menubar: false,  // Removes the menubar
-        plugins: 'link lists',  // Adds plugins you want to use
-        toolbar: 'bold italic | link | bullist numlist'  // Controls available in the toolbar
-    });
+tinymce.init({
+    selector: 'textarea',
+    menubar: false,
+    plugins: 'link', 
+    toolbar: 'bold italic | link',
+    valid_elements: 'strong/b,a[href],em/i',  // Only allow these HTML elements
+    content_style: "body { font-family:Arial; font-size:14px; }"  // Ensure consistent font
+});
+
 </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopify Description Converter // Beta v0.4</title>
+    <title>Shopify Description Converter // Beta v0.5</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -75,7 +78,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Shopify Description Converter // Beta v0.4</h2>
+        <h2>Shopify Description Converter // Beta v0.5</h2>
         <form id="descriptionForm">
             <label for="introduction">Introduction (will be shown directly):</label>
             <textarea id="introduction" rows="5" required></textarea>
@@ -103,10 +106,11 @@
     </div>
 <script> 
 function generateCode() {
-    const introduction = tinymce.get('introduction').getContent();
-    const details = document.getElementById('details').value;
-    const features = document.getElementById('features').value;
-    const included = document.getElementById('included').value;
+    const introduction = sanitizeOutput(tinymce.get('introduction').getContent());
+    const details = sanitizeOutput(tinymce.get('details').getContent());
+    const features = sanitizeOutput(tinymce.get('features').getContent());
+    const included = sanitizeOutput(tinymce.get('included').getContent());
+
 
     let template = "";
 
@@ -143,6 +147,7 @@ function generateCode() {
 }
 
 
+
 function convertToBulletPoints(text) {
     const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
     return `<ul>${items.join('')}</ul>`;
@@ -169,8 +174,21 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error fetching commit data:', error));
 });
 </script>
+<script>
+function sanitizeOutput(content) {
+    // Use a temporary DOM element to manipulate and sanitize content
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = content;
 
+    // Strip all style attributes
+    tempDiv.querySelectorAll('*').forEach(el => {
+        el.removeAttribute('style');
+    });
 
+    // Return sanitized content
+    return tempDiv.innerHTML;
+}
+</script>
 
     
 <script>
