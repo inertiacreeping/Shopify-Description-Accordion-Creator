@@ -4,58 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Description Generator</title>
+    <style>
+        .accordion {
+            cursor: pointer;
+            padding: 14px;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            width: 100%;
+            background-color: #f1f1f1;
+            margin-bottom: 10px;
+        }
+
+        .panel {
+            display: none;
+            padding: 0 18px;
+            overflow: hidden;
+        }
+
+        .accordion:after {
+            content: '\02795'; /* Unicode character for "plus" sign (+) */
+            float: right;
+        }
+
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+    </style>
 </head>
 <body>
     <h2>Product Description Generator</h2>
 
-    <label>Introduction:</label>
+    <label>Introduction (plain text):</label>
     <textarea id="intro" rows="4" cols="50"></textarea><br><br>
 
-    <label>Features & Benefits:</label>
-    <textarea id="features" rows="4" cols="50"></textarea><br><br>
+    <label>Features & Benefits (each point on a new line):</label>
+    <textarea id="features" rows="10" cols="50"></textarea><br><br>
 
-    <label>What’s Included:</label>
-    <textarea id="included" rows="4" cols="50"></textarea><br><br>
+    <label>What’s Included (each point on a new line):</label>
+    <textarea id="included" rows="10" cols="50"></textarea><br><br>
 
     <button onclick="generateCode()">Generate Code</button>
 
     <h3>Generated Code:</h3>
-    <textarea id="output" rows="10" cols="50" readonly></textarea>
+    <textarea id="output" rows="15" cols="50" readonly></textarea>
 
     <script>
         function generateCode() {
             var intro = document.getElementById('intro').value;
-            var features = document.getElementById('features').value;
-            var included = document.getElementById('included').value;
-            
+            var features = document.getElementById('features').value.split("\n").map(line => `<li>${line}</li>`).join('');
+            var included = document.getElementById('included').value.split("\n").map(line => `<li>${line}</li>`).join('');
+
             var html = `
             <!-- Introduction -->
-            <div class="product__description-segment">
-                <h2>Introduction</h2>
+            <button class="accordion">Introduction</button>
+            <div class="panel">
                 <p>${intro}</p>
             </div>
 
             <!-- Features & Benefits -->
-            <div class="product__description-segment">
-                <h2>Features & Benefits</h2>
-                <div class="product__description-content">
+            <button class="accordion">Features & Benefits</button>
+            <div class="panel">
+                <ul>
                     ${features}
-                </div>
-                <button class="show-more-button" style="display:none;">Show more</button>
+                </ul>
             </div>
 
             <!-- What’s Included -->
-            <div class="product__description-segment">
-                <h2>What’s Included</h2>
-                <div class="product__description-content">
+            <button class="accordion">What’s Included</button>
+            <div class="panel">
+                <ul>
                     ${included}
-                </div>
-                <button class="show-more-button" style="display:none;">Show more</button>
+                </ul>
             </div>
             `;
             
             // Display the generated code
             document.getElementById('output').value = html;
+        }
+
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
         }
     </script>
 </body>
