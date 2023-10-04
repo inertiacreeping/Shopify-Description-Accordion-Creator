@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopify Description Converter // Beta v0.1</title>
+    <title>Shopify Description Converter // Beta v0.2</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -76,7 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Shopify Description Converter // Beta v0.1</h2>
+        <h2>Shopify Description Converter // Beta v0.2</h2>
         <form id="descriptionForm">
             <label for="introduction">Introduction (will be shown directly):</label>
             <textarea id="introduction" rows="5" required></textarea>
@@ -95,8 +95,8 @@
         <h2>Shopify HTML Output</h2>
         <textarea id="output" rows="10" readonly></textarea>
     </div>
-    <script>
-        function generateCode() {
+<script>
+function generateCode() {
     const introduction = document.getElementById('introduction').value;
     const details = document.getElementById('details').value;
     const features = convertToBulletPoints(document.getElementById('features').value);
@@ -123,6 +123,7 @@
 
     document.getElementById('output').value = template;
     copyToClipboard(template);
+    showFireworks();  // Call this here
 }
 
 function convertToBulletPoints(text) {
@@ -139,19 +140,18 @@ function copyToClipboard(text) {
     document.body.removeChild(textarea);
     alert("Code generated and copied to clipboard!");
 }
-    showFireworks();
-}
 
 function showFireworks() {
     const fireworks = document.querySelector('.fireworks');
     fireworks.style.display = 'block';
     
-    // Hide the fireworks after 3 seconds
+    // Hide the fireworks after 5 seconds
     setTimeout(() => {
         fireworks.style.display = 'none';
-    }, 3000);
+    }, 5000);
 }
-    </script>
+
+</script>
 
 <div class="fireworks">
     <div class="before"></div>
