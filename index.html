@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <script src="https://cdn.tiny.cloud/1/dzj9jenjghu6twyp0ef0yi2fbtt0kotdxn7vcwtqxodw1nni/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+    tinymce.init({
+        selector: 'textarea',  // Change this value according to your HTML structure
+        menubar: false,  // Removes the menubar
+        plugins: 'link lists',  // Adds plugins you want to use
+        toolbar: 'bold italic | link | bullist numlist'  // Controls available in the toolbar
+    });
+</script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopify Description Converter // Beta v0.4</title>
@@ -91,7 +103,7 @@
     </div>
 <script> 
 function generateCode() {
-    const introduction = document.getElementById('introduction').value;
+    const introduction = tinymce.get('introduction').getContent();
     const details = document.getElementById('details').value;
     const features = document.getElementById('features').value;
     const included = document.getElementById('included').value;
@@ -158,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+
+
+    
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentYear = new Date().getFullYear();
