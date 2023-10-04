@@ -9,8 +9,8 @@ tinymce.init({
     selector: 'textarea',
     menubar: false,
     plugins: 'link', 
-    toolbar: 'bold italic | link',
-    valid_elements: 'strong/b,a[href],em/i',  // Only allow these HTML elements
+    toolbar: 'bold italic | link | bullist',
+    valid_elements: 'strong/b,a[href],em/i,ul,li',  // Add ul and li tags
     content_style: "body { font-family:Arial; font-size:14px; }"  // Ensure consistent font
 });
 
@@ -188,6 +188,7 @@ function sanitizeOutput(content) {
     // Return sanitized content
     return tempDiv.innerHTML;
 }
+
 </script>
 
     
