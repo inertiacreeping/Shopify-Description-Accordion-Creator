@@ -38,13 +38,16 @@
     <div class="container">
         <h2>Shopify Description Input</h2>
         <form id="descriptionForm">
-            <label for="introduction">Introduction:</label>
+            <label for="introduction">Introduction (will be shown directly):</label>
             <textarea id="introduction" rows="5" required></textarea>
 
-            <label for="features">Features & Benefits:</label>
+            <label for="details">More Details:</label>
+            <textarea id="details" rows="5" required></textarea>
+
+            <label for="features">Features & Benefits (list items, separated by new lines):</label>
             <textarea id="features" rows="5" required></textarea>
 
-            <label for="included">What’s Included:</label>
+            <label for="included">What’s Included (list items, separated by new lines):</label>
             <textarea id="included" rows="5" required></textarea>
 
             <button type="button" onclick="generateCode()">Generate Code</button>
@@ -55,13 +58,16 @@
     <script>
         function generateCode() {
             const introduction = document.getElementById('introduction').value;
-            const features = document.getElementById('features').value;
-            const included = document.getElementById('included').value;
+            const details = document.getElementById('details').value;
+            const features = convertToBulletPoints(document.getElementById('features').value);
+            const included = convertToBulletPoints(document.getElementById('included').value);
 
             const template = `
+            <p>${introduction}</p>
+            
             <details>
-                <summary>Introduction</summary>
-                ${introduction}
+                <summary>More Details</summary>
+                ${details}
             </details>
 
             <details>
@@ -76,6 +82,11 @@
             `;
 
             document.getElementById('output').value = template;
+        }
+
+        function convertToBulletPoints(text) {
+            const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
+            return `<ul>${items.join('')}</ul>`;
         }
     </script>
 </body>
