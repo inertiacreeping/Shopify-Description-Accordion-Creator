@@ -2,16 +2,6 @@
 <html lang="en">
 <head>
     <script src="https://raw.githubusercontent.com/inertiacreeping/momo/main/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea', // Select all textarea elements
-            menubar: false,
-            plugins: 'link',
-            toolbar: 'bold italic | link | bullist',
-            valid_elements: 'strong/b,a[href],em/i,ul,li',  // Allow specified HTML elements
-            content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }"  // Set content style
-        });
-    </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,7 +66,7 @@
 <body>
     <div class="container">
         <h2>Shopify Description Converter</h2>
-        <h3>// Beta v0.10 (local mce)</h3>
+        <h3>// Beta v0.11 (local mce)</h3>
         <form id="descriptionForm">
             <!-- Textareas for user input -->
             <label for="introduction">Introduction (will be shown directly):</label>
@@ -233,6 +223,18 @@ function resetForm() {
   }
 </style>
 
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    tinymce.init({
+        selector: 'textarea',
+        menubar: false,
+        plugins: 'link',
+        toolbar: 'bold italic | link | bullist',
+        valid_elements: 'strong/b,a[href],em/i,ul,li',
+        content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }"
+    });
+});
+    </script>
 
 </body>
 
