@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <script src="https://raw.githubusercontent.com/inertiacreeping/momo/main/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-
     <script>
-tinymce.init({
-    selector: 'textarea',
-    menubar: false,
-    plugins: 'link', 
-    toolbar: 'bold italic | link | bullist',
-    valid_elements: 'strong/b,a[href],em/i,ul,li',  // Add ul and li tags
-    content_style: "body { font-family:Arial; font-size:14px; }"  // Ensure consistent font
-});
-
-</script>
+        tinymce.init({
+            selector: 'textarea', // Select all textarea elements
+            menubar: false,
+            plugins: 'link',
+            toolbar: 'bold italic | link | bullist',
+            valid_elements: 'strong/b,a[href],em/i,ul,li',  // Allow specified HTML elements
+            content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }"  // Set content style
+        });
+    </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,30 +78,25 @@ tinymce.init({
         <h2>Shopify Description Converter</h2>
         <h3>// Beta v0.10 (local mce)</h3>
         <form id="descriptionForm">
+            <!-- Textareas for user input -->
             <label for="introduction">Introduction (will be shown directly):</label>
             <textarea id="introduction" rows="5" required></textarea>
 
-            <label for="details">More Details:</label>
-            <textarea id="details" rows="5" required></textarea>
+            <!-- Repeat for other textareas as needed -->
 
-            <label for="features">Features & Benefits (list items, separated by new lines):</label>
-            <textarea id="features" rows="5" required></textarea>
-
-            <label for="included">What’s Included (list items, separated by new lines):</label>
-            <textarea id="included" rows="5" required></textarea>
-
-        <button type="button" onclick="generateCode()">Generate Code</button>
-        <button type="button" onclick="resetForm()" class="reset-button">💀 Reset</button>
-
+            <button type="button" onclick="generateCode()">Generate Code</button>
+            <button type="button" onclick="resetForm()" class="reset-button">💀 Reset</button>
         </form>
+
         <h2>Shopify HTML Output</h2>
         <textarea id="output" rows="10" readonly></textarea>
-            <div id="info">
-                <p id="copyright"></p>
-                <p id="lastUpdated"></p>
-            </div>
-
+        <div id="info">
+            <!-- Copyright and last updated information -->
+            <p id="copyright"></p>
+            <p id="lastUpdated"></p>
+        </div>
     </div>
+    
 <script> 
 function generateCode() {
     const introduction = sanitizeOutput(tinymce.get('introduction').getContent());
