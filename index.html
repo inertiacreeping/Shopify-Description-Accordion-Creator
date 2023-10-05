@@ -214,6 +214,27 @@ function resetForm() {
     document.getElementById('output').value = '';
 }
 </script>
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="https://cdn.shopify.com/s/files/1/0537/2513/5031/files/300px-Puha-Logo.png?v=1690863898" alt="Spinning Puha Logo" style="height: 100px; animation: spin 5s linear infinite, color-shift 5s linear infinite;">
+</div>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes color-shift {
+    0% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(0deg); }
+    20% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(60deg); }
+    40% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(120deg); }
+    60% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(180deg); }
+    80% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(240deg); }
+    100% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(300deg); }
+  }
+</style>
+
+
 </body>
 
 </html>
