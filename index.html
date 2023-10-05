@@ -171,15 +171,18 @@ function copyToClipboard(text) {
 }
     
 document.addEventListener('DOMContentLoaded', function() {
-    // Fetching the last commit date
+    // Fetching the last commit date and time
     fetch('https://api.github.com/repos/inertiacreeping/momo/commits/main')
         .then(response => response.json())
         .then(data => {
-            const lastUpdatedDate = new Date(data.commit.author.date).toLocaleDateString();
-            document.getElementById('lastUpdated').textContent = 'Last updated: ' + lastUpdatedDate;
+            const commitDate = new Date(data.commit.author.date);
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+            const formattedDate = commitDate.toLocaleDateString('en-US', options);
+            document.getElementById('lastUpdated').textContent = 'Last updated: ' + formattedDate;
         })
         .catch(error => console.error('Error fetching commit data:', error));
 });
+
 </script>
 <script>
 function sanitizeOutput(content) {
