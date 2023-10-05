@@ -111,14 +111,13 @@ function generateCode() {
     const features = sanitizeOutput(tinymce.get('features').getContent());
     const included = sanitizeOutput(tinymce.get('included').getContent());
 
-
     let template = "";
 
-    if(introduction.trim() !== "") {
+    if (introduction.trim() !== "") {
         template += `<p>${introduction}</p>`;
     }
-    
-    if(details.trim() !== "") {
+
+    if (details.trim() !== "") {
         template += `
         <details>
             <summary>More Details</summary>
@@ -126,7 +125,7 @@ function generateCode() {
         </details>`;
     }
 
-    if(features.trim() !== "") {
+    if (features.trim() !== "") {
         template += `
         <details>
             <summary>Features & Benefits</summary>
@@ -134,7 +133,7 @@ function generateCode() {
         </details>`;
     }
 
-    if(included.trim() !== "") {
+    if (included.trim() !== "") {
         template += `
         <details>
             <summary>What’s Included</summary>
@@ -142,8 +141,15 @@ function generateCode() {
         </details>`;
     }
 
-    document.getElementById('output').value = template;
+    // Set the generated HTML code in the output textarea
+    const outputTextarea = document.getElementById('output');
+    outputTextarea.value = template;
+
+    // Copy the generated code to the clipboard
     copyToClipboard(template);
+
+    // Scroll the output textarea to the top to ensure it's visible
+    outputTextarea.scrollTop = 0;
 }
 
 
