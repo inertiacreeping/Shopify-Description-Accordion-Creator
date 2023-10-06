@@ -203,7 +203,7 @@ function generateCode() {
         </details>`;
     }
 
-     // Set the generated HTML code in the output textarea
+    // Set the generated HTML code in the output textarea
     const outputTextarea = document.getElementById('output');
     outputTextarea.value = template;
 
@@ -223,17 +223,6 @@ function convertToBulletPoints(text) {
     const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
     return `<ul>${items.join('')}</ul>`;
 }
-
-
-    let combinedText = "";
-    tempDiv.querySelectorAll('p').forEach(p => {
-        combinedText += p.textContent + "\n";
-    });
-
-    const items = combinedText.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
-    return `<ul>${items.join('')}</ul>`;
-}
-
 
 function copyToClipboard(text) {
     const textarea = document.createElement('textarea');
@@ -271,34 +260,21 @@ function sanitizeOutput(content) {
     return tempDiv.innerHTML;
 }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentYear = new Date().getFullYear();
-        document.getElementById('copyright').textContent = 'Copyright ' + currentYear + ' Morris Lazootin';
-    });
-</script>
-<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const currentYear = new Date().getFullYear();
+    document.getElementById('copyright').textContent = 'Copyright ' + currentYear + ' Morris Lazootin';
+});
+
 function resetForm() {
     document.getElementById('descriptionForm').reset();
     document.getElementById('output').value = '';
 }
 </script>
+
+    
 <div style="display: flex; justify-content: center; align-items: center;">
   <img src="https://cdn.shopify.com/s/files/1/0537/2513/5031/files/300px-Puha-Logo.png?v=1690863898" alt="Spinning Puha Logo" style="height: 100px; animation: spin 5s linear infinite, color-shift 5s linear infinite;">
 </div>
-
-        <script>
-document.addEventListener('DOMContentLoaded', function() {
-    tinymce.init({
-        selector: '#introduction, #details, #features, #included',
-        menubar: false,
-        plugins: 'link',
-        toolbar: 'bold italic | link | bullist',
-        valid_elements: 'strong/b,a[href],em/i,ul,li',
-        content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }",
-        convert_urls: false  //
-    });
-});
-    </script>
 
 </body>
 
