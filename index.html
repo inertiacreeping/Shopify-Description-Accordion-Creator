@@ -146,6 +146,7 @@
             <br>bullet points not outputting correctly
             <br>relative shopify links outputting with "admin.shopify" appended
             <br>fixed lists again, hopefully
+                ok one more time before I go crazy, replacing <br> with \n
             </p>
         </h5>
         </div>
@@ -206,10 +207,12 @@ function generateCode() {
 
 
 function convertToBulletPoints(text) {
-    // If the text already contains list items, return as is.
-    if (text.includes('<li>')) {
-        return text;
-    }
+    // Replace <br> tags with newlines
+    text = text.replace(/<br.*?>/g, '\n');
+    const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
+    return `<ul>${items.join('')}</ul>`;
+}
+
 
     // Use a temporary DOM element to extract text from <p> tags
     let tempDiv = document.createElement("div");
