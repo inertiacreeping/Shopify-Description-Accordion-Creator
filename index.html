@@ -7,14 +7,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopify Description Converter // Beta v0.5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
+
+        label {
+            font-size: 1.2em;       /* Makes the label text bigger */
+            font-weight: bold;      /* Makes the label text bold */
+            margin-top: 20px;       /* Adds space above the label */
+            margin-bottom: 10px;    /* Adds space below the label */
+            font-family: 'Roboto', sans-serif;
+        }
         
+        label {
+            position: relative;
+            display: inline-block;
+        }
+
+        label:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #f06;
+            top: 0;
+            left: 0;
+        }
+
+        label:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #f06;
+            bottom: 0;
+            left: 0;
+        }
         .tox-notifications-container{
             display:none !important;
         }
         
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             padding: 20px;
         }
 
