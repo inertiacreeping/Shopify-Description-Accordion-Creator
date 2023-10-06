@@ -9,7 +9,20 @@
     <title>Shopify Description Converter // Beta v0.5</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
-
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        
+          @keyframes color-shift {
+            0% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(0deg); }
+            20% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(60deg); }
+            40% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(120deg); }
+            60% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(180deg); }
+            80% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(240deg); }
+            100% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(300deg); }
+          }
+        
         label {
             font-size: 1em;       /* Makes the label text bigger */
             font-weight: bold;      /* Makes the label text bold */
@@ -117,7 +130,7 @@
 <body>
     <div class="container">
         <h2>Shopify Description Converter</h2>
-        <h4>++Beta v0.19 </h4>
+        <h4>++Beta v0.2 </h4>
         <form id="descriptionForm">
             <!-- Textareas for user input -->
             <label for="introduction">Introduction (will be shown directly):</label>
@@ -146,19 +159,19 @@
             <br>bullet points not outputting correctly
             <br>relative shopify links outputting with "admin.shopify" appended
             <br>fixed lists again, hopefully
-                ok one more time before I go crazy, replacing <br> with \n
+            <br>ok one more time before I go crazy, replacing br with \n
             </p>
         </h5>
         </div>
     </div>
     
 <script> 
+<script> 
 function generateCode() {
     const introduction = sanitizeOutput(tinymce.get('introduction').getContent());
     const details = sanitizeOutput(tinymce.get('details').getContent());
     const features = sanitizeOutput(tinymce.get('features').getContent());
     const included = sanitizeOutput(tinymce.get('included').getContent());
-
 
     let template = "";
 
@@ -204,8 +217,6 @@ function generateCode() {
     alert("Code generated and copied to clipboard!");
 }
 
-
-
 function convertToBulletPoints(text) {
     // Replace <br> tags with newlines
     text = text.replace(/<br.*?>/g, '\n');
@@ -213,10 +224,6 @@ function convertToBulletPoints(text) {
     return `<ul>${items.join('')}</ul>`;
 }
 
-
-    // Use a temporary DOM element to extract text from <p> tags
-    let tempDiv = document.createElement("div");
-    tempDiv.innerHTML = text;
 
     let combinedText = "";
     tempDiv.querySelectorAll('p').forEach(p => {
@@ -250,8 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error fetching commit data:', error));
 });
 
-</script>
-<script>
 function sanitizeOutput(content) {
     // Use a temporary DOM element to manipulate and sanitize content
     let tempDiv = document.createElement("div");
@@ -266,10 +271,6 @@ function sanitizeOutput(content) {
     return tempDiv.innerHTML;
 }
 
-</script>
-
-    
-<script>
     document.addEventListener('DOMContentLoaded', function() {
         const currentYear = new Date().getFullYear();
         document.getElementById('copyright').textContent = 'Copyright ' + currentYear + ' Morris Lazootin';
@@ -284,22 +285,6 @@ function resetForm() {
 <div style="display: flex; justify-content: center; align-items: center;">
   <img src="https://cdn.shopify.com/s/files/1/0537/2513/5031/files/300px-Puha-Logo.png?v=1690863898" alt="Spinning Puha Logo" style="height: 100px; animation: spin 5s linear infinite, color-shift 5s linear infinite;">
 </div>
-
-<style>
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  @keyframes color-shift {
-    0% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(0deg); }
-    20% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(60deg); }
-    40% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(120deg); }
-    60% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(180deg); }
-    80% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(240deg); }
-    100% { filter: grayscale(100%) brightness(2) sepia(100%) hue-rotate(300deg); }
-  }
-</style>
 
         <script>
 document.addEventListener('DOMContentLoaded', function() {
