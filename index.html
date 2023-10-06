@@ -110,7 +110,7 @@
             content: '';
             position: absolute;
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: #f06;
             top: 0;
             left: 0;
@@ -120,7 +120,7 @@
             content: '';
             position: absolute;
             width: 100%;
-            height: 8px;
+            height: 6px;
             background: #f06;
             bottom: 0;
             left: 0;
@@ -228,8 +228,8 @@ function convertToBulletPoints(text) {
     text = text.replace(/<p>|<\/p>/g, '');
     console.log("After removing <p> tags:", text);
 
-    Replace <br> and its variations with newlines
-    text = text.replace(/<br\s*\/?>/g, '\n');
+    // Replace <br> and its variations with newlines
+    text = text.replace(/<br\s*.*?>/g, '\n');
     console.log("After replacing <br> tags:", text);
     
     const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
@@ -237,8 +237,7 @@ function convertToBulletPoints(text) {
     
     return `<ul>${items.join('')}</ul>`;
 }
-
-
+    
 function copyToClipboard(text) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -290,10 +289,12 @@ tinymce.init({
         menubar: false,
         plugins: 'link',
         toolbar: 'bold italic | link | bullist',
-        valid_elements: 'strong/b,a[href],em/i,ul,li',
+        valid_elements: 'strong/b,a[href],em/i,ul,li,br',
         content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }",
-        convert_urls: false
-    });
+        convert_urls: false,
+        forced_root_block: false // This can help preserve the <br> tags on line breaks
+});
+
     
 </script>
 
