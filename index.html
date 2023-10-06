@@ -140,7 +140,10 @@
             <p id="lastUpdated"></p>
             <h5></h5><p><strong>fixed"</strong>
             <br>bullet points not outputting correctly
-            <br>relative shopify links outputting with "admin.shopify" appended</p></h5>
+            <br>relative shopify links outputting with "admin.shopify" appended
+            <br>fixed lists again, hopefully
+            </p>
+        </h5>
         </div>
     </div>
     
@@ -199,6 +202,11 @@ function generateCode() {
 
 
 function convertToBulletPoints(text) {
+    // If the text already contains list items, return as is.
+    if (text.includes('<li>')) {
+        return text;
+    }
+
     // Use a temporary DOM element to extract text from <p> tags
     let tempDiv = document.createElement("div");
     tempDiv.innerHTML = text;
@@ -211,6 +219,7 @@ function convertToBulletPoints(text) {
     const items = combinedText.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
     return `<ul>${items.join('')}</ul>`;
 }
+
 
 function copyToClipboard(text) {
     const textarea = document.createElement('textarea');
