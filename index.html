@@ -110,7 +110,7 @@
             content: '';
             position: absolute;
             width: 100%;
-            height: 4px;
+            height: 8px;
             background: #f06;
             top: 0;
             left: 0;
@@ -120,7 +120,7 @@
             content: '';
             position: absolute;
             width: 100%;
-            height: 4px;
+            height: 8px;
             background: #f06;
             bottom: 0;
             left: 0;
@@ -220,28 +220,23 @@ function generateCode() {
     // Then display the alert
     alert("Code generated and copied to clipboard!");
 }
-
+    
 function convertToBulletPoints(text) {
+    console.log("Original Text:", text);
+
+    // Remove <p> tags
+    text = text.replace(/<p>|<\/p>/g, '');
+    console.log("After removing <p> tags:", text);
+
+    Replace <br> and its variations with newlines
+    text = text.replace(/<br\s*\/?>/g, '\n');
+    console.log("After replacing <br> tags:", text);
+    
     const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
+    console.log("Items Array:", items);
+    
     return `<ul>${items.join('')}</ul>`;
 }
-    
-//function convertToBulletPoints(text) {
-//    console.log("Original Text:", text);
-//
-//    // Remove <p> tags
-  //  text = text.replace(/<p>|<\/p>/g, '');
-    //console.log("After removing <p> tags:", text);
-
-    // Replace <br> and its variations with newlines
-    //text = text.replace(/<br\s*\/?>/g, '\n');
-    //console.log("After replacing <br> tags:", text);
-    
-    //const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
-   // console.log("Items Array:", items);
-    
-    //return `<ul>${items.join('')}</ul>`;
-//}
 
 
 function copyToClipboard(text) {
