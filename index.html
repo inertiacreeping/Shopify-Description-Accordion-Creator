@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopify Description Converter // Beta v0.5</title>
     <style>
+        
+        .mce-notification {display: none !important;}
+        
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -67,7 +70,7 @@
 <body>
     <div class="container">
         <h2>Shopify Description Converter</h2>
-        <h4>// Beta v0.15 (cloud mce)</h4>
+        <h4>// Beta v0.16 (cloud mce)</h4>
         <form id="descriptionForm">
             <!-- Textareas for user input -->
             <label for="introduction">Introduction (will be shown directly):</label>
@@ -97,10 +100,10 @@
     
 <script> 
 function generateCode() {
-    const introduction = sanitizeOutput(document.getElementById('introduction').value);
-    const details = sanitizeOutput(document.getElementById('details').value);
-    const features = sanitizeOutput(document.getElementById('features').value);
-    const included = sanitizeOutput(document.getElementById('included').value);
+    const introduction = sanitizeOutput(tinymce.get('introduction').getContent());
+    const details = sanitizeOutput(tinymce.get('details').getContent());
+    const features = sanitizeOutput(tinymce.get('features').getContent());
+    const included = sanitizeOutput(tinymce.get('included').getContent());
 
 
     let template = "";
