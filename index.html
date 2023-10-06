@@ -56,6 +56,7 @@
         }
 
         button, .reset-button {
+            margin-top: 20px;
             border-radius: 5px;
         }
         
@@ -160,7 +161,7 @@
             <br>relative shopify links outputting with "admin.shopify" appended
             <br>fixed lists again, hopefully
             <br>ok one more time before I go crazy, replacing br with \n
-                <br>complete script re-write<br>removed errant script tag<br>un-fucked tinymce.init<br>HOW ARE BULLETPOINTS SO HARD
+                <br>complete script re-write<br>removed errant script tag<br>un-fucked tinymce.init<br>HOW ARE BULLETPOINTS SO HARD<br>error logging, hopefully this helps. probably won't.
             </p>
         </h5>
         </div>
@@ -172,7 +173,8 @@ function generateCode() {
     const details = sanitizeOutput(tinymce.get('details').getContent());
     const features = sanitizeOutput(tinymce.get('features').getContent());
     const included = sanitizeOutput(tinymce.get('included').getContent());
-
+    console.log(included);
+    
     let template = "";
 
     if (introduction.trim() !== "") {
@@ -223,6 +225,7 @@ function convertToBulletPoints(text) {
     
     // Split the text into lines based on newline characters and filter out empty items
     const items = text.split('\n').filter(item => item.trim() !== '');
+    console.log(items);
     
     // Map each line to an HTML list item
     const listItems = items.map(item => `<li>${item.trim()}</li>`);
