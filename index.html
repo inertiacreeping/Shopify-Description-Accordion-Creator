@@ -54,7 +54,7 @@
             background-color: #555;
         }
         
-        #copyright, #lastUpdated {
+        #copyright, #lastUpdated, h5 {
             text-align: center;
             font-size: 0.7em;         /* Adjusts the size. 0.8em is 80% of the current font size. You can tweak this value to your liking. */
             text-transform: lowercase; /* Converts text to all caps */
@@ -82,38 +82,38 @@
         }
 
         h2 {
-    text-transform: uppercase; /* Makes the text all caps */
-    position: relative;
-    display: inline-block;
-    padding: 5px 0; /* This adds a bit of spacing so the lines don't touch the text */
-}
+            text-transform: uppercase; /* Makes the text all caps */
+            position: relative;
+            display: inline-block;
+            padding: 5px 0; /* This adds a bit of spacing so the lines don't touch the text */
+        }
 
-h2:before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: #f06;
-    top: 0;
-    left: 0;
-}
+        h2:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #f06;
+            top: 0;
+            left: 0;
+        }
 
-h2:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: #f06;
-    bottom: 0;
-    left: 0;
-}
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #f06;
+            bottom: 0;
+            left: 0;
+        }
 
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Shopify Description Converter</h2>
-        <h4>++Beta v0.18 </h4>
+        <h4>++Beta v0.19 </h4>
         <form id="descriptionForm">
             <!-- Textareas for user input -->
             <label for="introduction">Introduction (will be shown directly):</label>
@@ -138,6 +138,9 @@ h2:after {
             <!-- Copyright and last updated information -->
             <p id="copyright"></p>
             <p id="lastUpdated"></p>
+            <h5></h5><p><strong>fixed"</strong>
+            <br>bullet points not outputting correctly
+            <br>relative shopify links outputting with "admin.shopify" appended</p></h5>
         </div>
     </div>
     
@@ -196,7 +199,16 @@ function generateCode() {
 
 
 function convertToBulletPoints(text) {
-    const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
+    // Use a temporary DOM element to extract text from <p> tags
+    let tempDiv = document.createElement("div");
+    tempDiv.innerHTML = text;
+
+    let combinedText = "";
+    tempDiv.querySelectorAll('p').forEach(p => {
+        combinedText += p.textContent + "\n";
+    });
+
+    const items = combinedText.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
     return `<ul>${items.join('')}</ul>`;
 }
 
@@ -281,7 +293,8 @@ document.addEventListener('DOMContentLoaded', function() {
         plugins: 'link',
         toolbar: 'bold italic | link | bullist',
         valid_elements: 'strong/b,a[href],em/i,ul,li',
-        content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }"
+        content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }",
+        convert_urls: false  //
     });
 });
     </script>
