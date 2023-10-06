@@ -218,11 +218,19 @@ function generateCode() {
 }
 
 function convertToBulletPoints(text) {
-    // Replace <br> tags with newlines
-    text = text.replace(/<br.*?>/g, '\n');
-    const items = text.split('\n').filter(item => item.trim() !== '').map(item => `<li>${item.trim()}</li>`);
-    return `<ul>${items.join('')}</ul>`;
+    // Replace <br> tags and new lines with actual newline characters
+    text = text.replace(/<br.*?>/g, '\n').replace(/<\/p><p>/g, '\n').replace(/<p>|<\/p>/g, '');
+    
+    // Split the text into lines based on newline characters and filter out empty items
+    const items = text.split('\n').filter(item => item.trim() !== '');
+    
+    // Map each line to an HTML list item
+    const listItems = items.map(item => `<li>${item.trim()}</li>`);
+
+    // Join the list items into a single unordered list and return
+    return `<ul>${listItems.join('')}</ul>`;
 }
+
 
 function copyToClipboard(text) {
     const textarea = document.createElement('textarea');
