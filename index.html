@@ -42,7 +42,9 @@
         }
         
         #copyright, #lastUpdated {
-            font-size: 0.5em;         /* Adjusts the size. 0.8em is 80% of the current font size. You can tweak this value to your liking. */
+            margin: auto;
+            width: 50%;
+            font-size: 0.7em;         /* Adjusts the size. 0.8em is 80% of the current font size. You can tweak this value to your liking. */
             text-transform: lowercase; /* Converts text to all caps */
             letter-spacing: 0px;      /* Increases spacing between letters. Adjust as needed. */
         }
@@ -72,7 +74,7 @@
 <body>
     <div class="container">
         <h2>Shopify Description Converter</h2>
-        <h4>// Beta v0.17 (cloud mce)</h4>
+        <h4>++Beta v0.18 </h4>
         <form id="descriptionForm">
             <!-- Textareas for user input -->
             <label for="introduction">Introduction (will be shown directly):</label>
@@ -138,15 +140,18 @@ function generateCode() {
         </details>`;
     }
 
-    // Set the generated HTML code in the output textarea
+     // Set the generated HTML code in the output textarea
     const outputTextarea = document.getElementById('output');
     outputTextarea.value = template;
+
+    // Scroll the output textarea to the top to ensure it's visible
+    outputTextarea.scrollTop = 0;
 
     // Copy the generated code to the clipboard
     copyToClipboard(template);
 
-    // Scroll the output textarea to the top to ensure it's visible
-    outputTextarea.scrollTop = 0;
+    // Then display the alert
+    alert("Code generated and copied to clipboard!");
 }
 
 
@@ -163,7 +168,6 @@ function copyToClipboard(text) {
     textarea.select();
     document.execCommand('copy');
     document.body.removeChild(textarea);
-    alert("Code generated and copied to clipboard!");
 }
     
 document.addEventListener('DOMContentLoaded', function() {
