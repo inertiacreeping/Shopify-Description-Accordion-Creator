@@ -73,7 +73,7 @@
         }
         
         #copyright, #lastUpdated, h5 {
-            text-align: center;
+            text-align: left;
             font-size: 0.7em;         /* Adjusts the size. 0.8em is 80% of the current font size. You can tweak this value to your liking. */
             text-transform: lowercase; /* Converts text to all caps */
             letter-spacing: 0px;      /* Increases spacing between letters. Adjust as needed. */
@@ -148,21 +148,27 @@
             
             <button type="button" onclick="generateCode()">Generate Code</button>
             <button type="button" onclick="resetForm()" class="reset-button">💀 Reset</button>
+            <span id="clipboardMessage" style="margin-left: 10px; color: red; display: none;">Code is in your clipboard!</span>
+
         </form>
 
         <h2>Shopify HTML Output</h2>
         <textarea id="output" rows="10" readonly></textarea>
         <div id="info">
-            <!-- Copyright and last updated information -->
-            <p id="copyright"></p>
-            <p id="lastUpdated"></p>
-            <h5></h5><p><strong>fixed:</strong>
-            <br>bullet points not outputting correctly
-            <br>relative shopify links outputting with "admin.shopify" appended
-            <br>fixed lists again, hopefully
-            <br>ok one more time before I go crazy, replacing br with \n
-                <br>complete script re-write<br>removed errant script tag<br>un-fucked tinymce.init<br>HOW ARE BULLETPOINTS SO HARD<br>error logging, hopefully this helps. probably won't.
-            <br>reverting some changes x2
+
+<textarea id="changelog" rows="15" cols="50">
+bullet points not outputting correctly
+relative shopify links outputting with "admin.shopify" appended
+fixed lists again, hopefully
+ok one more time before I go crazy, replacing br with \n
+complete script re-write
+removed errant script tag
+un-fucked tinymce.init
+HOW ARE BULLETPOINTS SO HARD
+error logging, hopefully this helps. probably won't.
+reverting some changes x2
+okay, fixed
+</textarea>
             
             </p>
         </h5>
@@ -171,10 +177,10 @@
     
 <script> 
 function generateCode() {
-    const introduction = sanitizeOutput(tinymce.get('introduction').getContent());
-    const details = sanitizeOutput(tinymce.get('details').getContent());
-    const features = sanitizeOutput(tinymce.get('features').getContent());
-    const included = sanitizeOutput(tinymce.get('included').getContent());
+    const introduction = cleanupLinks(sanitizeOutput(tinymce.get('introduction').getContent()));
+    const details = cleanupLinks(sanitizeOutput(tinymce.get('details').getContent()));
+    const features = cleanupLinks(sanitizeOutput(tinymce.get('features').getContent()));
+    const included = cleanupLinks(sanitizeOutput(tinymce.get('included').getContent()));
     console.log(included);
     
     let template = "";
@@ -217,8 +223,11 @@ function generateCode() {
     // Copy the generated code to the clipboard
     copyToClipboard(template);
 
-    // Then display the alert
-    alert("Code generated and copied to clipboard!");
+    // Then display the alert 
+    // commented out // alert("Code generated and copied to clipboard!");
+
+    //display the "code is in your clipboard" text
+    document.getElementById("clipboardMessage").style.display = "inline";
 }
     
 function convertToBulletPoints(text) {
@@ -255,10 +264,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const commitDate = new Date(data.commit.author.date);
             const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
             const formattedDate = commitDate.toLocaleDateString('en-US', options);
-            document.getElementById('lastUpdated').textContent = 'Last updated: ' + formattedDate;
+
+            // Instead of setting a DOM element's content, we're setting the textarea's content
+            const changelogTextarea = document.getElementById('changelog');
+            const currentYear = new Date().getFullYear();
+            const copyrightText = 'Copyright ' + currentYear + ' Morris Lazootin\n';
+            changelogTextarea.value = copyrightText + 'Last updated: ' + formattedDate + '\n\nchangelog\n______\n' + changelogTextarea.value;
         })
         .catch(error => console.error('Error fetching commit data:', error));
 });
+
 
 function sanitizeOutput(content) {
     // Use a temporary DOM element to manipulate and sanitize content
@@ -274,14 +289,28 @@ function sanitizeOutput(content) {
     return tempDiv.innerHTML;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const currentYear = new Date().getFullYear();
-    document.getElementById('copyright').textContent = 'Copyright ' + currentYear + ' Morris Lazootin';
-});
 
 function resetForm() {
     document.getElementById('descriptionForm').reset();
     document.getElementById('output').value = '';
+    // Hide the clipboard message
+    document.getElementById("clipboardMessage").style.display = "none";
+}
+
+function cleanupLinks(htmlContent) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, 'text/html');
+    const anchors = doc.querySelectorAll('a');
+    
+    anchors.forEach(anchor => {
+        let href = anchor.getAttribute('href');
+        if (href && href.includes('https://admin.shopify.com')) {
+            href = href.replace('https://admin.shopify.com', '');
+            anchor.setAttribute('href', href);
+        }
+    });
+
+    return doc.body.innerHTML;
 }
 
 tinymce.init({
@@ -292,7 +321,9 @@ tinymce.init({
         valid_elements: 'strong/b,a[href],em/i,ul,li,br',
         content_style: "body { font-family: Arial, sans-serif; font-size: 14px; }",
         convert_urls: false,
-        forced_root_block: false // This can help preserve the <br> tags on line breaks
+        forced_root_block: false, // This can help preserve the <br> tags on line breaks
+        relative_urls: false, // This prevents TinyMCE from adding the base URL to the relative URL.
+        remove_script_host: true, // This prevents the host name (e.g., "admin.shopify.com") from being added.
 });
 
     
