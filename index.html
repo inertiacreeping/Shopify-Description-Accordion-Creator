@@ -191,24 +191,24 @@ function generateCode() {
 
     if (details.trim() !== "") {
         template += `
-        <details>
-            <summary>More Details</summary>
+        <details class="shopify-converter">
+            <summary class="shopify-converter">More Details</summary>
             ${details}
         </details>`;
     }
 
     if (features.trim() !== "") {
         template += `
-        <details>
-            <summary>Features & Benefits</summary>
+        <details class="shopify-converter">
+            <summary class="shopify-converter">Features & Benefits</summary>
             ${convertToBulletPoints(features)}
         </details>`;
     }
 
     if (included.trim() !== "") {
         template += `
-        <details>
-            <summary>What’s Included</summary>
+        <details class="shopify-converter">
+            <summary class="shopify-converter">What’s Included</summary>
             ${convertToBulletPoints(included)}
         </details>`;
     }
@@ -223,10 +223,7 @@ function generateCode() {
     // Copy the generated code to the clipboard
     copyToClipboard(template);
 
-    // Then display the alert 
-    // commented out // alert("Code generated and copied to clipboard!");
-
-    //display the "code is in your clipboard" text
+    // Display the "code is in your clipboard" text
     document.getElementById("clipboardMessage").style.display = "inline";
 }
     
