@@ -140,10 +140,10 @@
             <label for="details">More Details:</label>
             <textarea id="details" rows="5" required></textarea>
 
-            <label for="features">Features & Benefits (list items, separated by new lines):</label>
+            <label for="features">Features & Benefits (list items, separated by new lines, bullet points):</label>
             <textarea id="features" rows="5" required></textarea>
 
-            <label for="included">What’s Included (list items, separated by new lines):</label>
+            <label for="included">What’s In The Box (list items, separated by new lines, <b>no</b> bullet points):</label>
             <textarea id="included" rows="5" required></textarea>
             
             <button type="button" onclick="generateCode()">Generate Code</button>
@@ -209,7 +209,7 @@ function generateCode() {
     if (included.trim() !== "") {
         template += `
         <details class="shopify-converter">
-            <summary class="shopify-converter">What’s Included</summary>
+            <summary class="shopify-converter">What's in the box'</summary>
             ${convertToBulletPoints(included, 'whats-included')}
         </details>`;
     }
